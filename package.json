@@ -1,0 +1,31 @@
+{
+  "name": "kanzu-code-movie-library-backend",
+  "version": "1.0.0",
+  "description": "Welcome to the Movie Library project developed during the Kanzu Code Foundation Bootcamp! This project is aimed at applying full-stack knowledge learned during the bootcamp, utilizing Node.js, Express.js, PostgreSQL, and Prisma as the ORM",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev":"nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Famba-Abdulnassiir/kanzu-code-movie-library-backend.git"
+  },
+  "keywords": [
+    "movieApp",
+    "Kanzucode",
+    "movieLibrary."
+  ],
+  "author": "Abdulnassiir Famba",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Famba-Abdulnassiir/kanzu-code-movie-library-backend/issues"
+  },
+  "homepage": "https://github.com/Famba-Abdulnassiir/kanzu-code-movie-library-backend#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "prisma": "^5.5.2"
+  }
+}
