@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -10,3 +11,59 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id Int @id @default(autoincrement())
+  userName String
+  email String 
+  password String
+  role Role @default(User)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  User
+  Admin
+}
+
+model Movie {
+  id Int @id @default(autoincrement())
+  title  String @db.VarChar(50)
+  description String @db.VarChar(255)
+  releaseYear DateTime
+  genre String @db.VarChar(50)
+  director String @db.VarChar(255)
+  rating Int
+  imageUrl String @db.VarChar(255)
+  trailorUrl String?  @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
+model Payment {
+  id Int @id @default(autoincrement())
+  paymentDate DateTime
+  paymentMethod String @db.VarChar(50)
+  amount Int
+  transactionId String @db.VarChar(255)
+  orderId Int
+}
+
+model Comment {
+  id Int @id @default(autoincrement())
+  movieId Int
+  userId Int
+  content String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+  userId Int
+  movieId Int
+  orderDate DateTime
+  status String @db.VarChar(50)
+  totalAmount Int
+}
