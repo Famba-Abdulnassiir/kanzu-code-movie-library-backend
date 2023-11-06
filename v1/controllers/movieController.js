@@ -3,19 +3,12 @@ const prisma = new PrismaClient();
 const dotenv = require('dotenv');
 dotenv.config();
 const multer = require('multer');
-const cloudinary = require('cloudinary');
 const {unlink} = require('fs');
+const cloudinary = require('../../config/cloudinary')
+
 
 const upload = multer({dest: "uploads/"});
 
-cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET,
-    shorten: true,
-    secure: true,
-    ssl_detected: true
-})
 
 const getAllMovies = async (req, res) =>{
     try {

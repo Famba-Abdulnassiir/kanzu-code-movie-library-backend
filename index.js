@@ -2,11 +2,22 @@ const express = require ('express');
 const app = express();
 const movieRoute = require('./v1/routes/movie');
 const userRoute = require('./v1/routes/user');
-const authUser = require('./v1/routes/auth')
+const authUser = require('./v1/routes/auth');
+const { auth } = require('express-openid-connect');
+const config = require('./config/googleAuth');
+
+
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 
+// auth router attaches /login, /logout, and /callback routes to the baseURL
+app.use(auth(config));
+
+// req.isAuthenticated is provided from the auth router
+app.get('/', (req, res) => {
+    res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+  });
 
 app.use('/api/v1/movies', movieRoute);
 app.use ('/users/signup',userRoute)
