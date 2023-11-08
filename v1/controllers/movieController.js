@@ -5,6 +5,7 @@ dotenv.config();
 const multer = require('multer');
 const {unlink} = require('fs');
 const cloudinary = require('../../config/cloudinary')
+const {movieValidation} = require('../../lib/validations')
 
 
 const upload = multer({dest: "uploads/"});
@@ -12,7 +13,16 @@ const upload = multer({dest: "uploads/"});
 
 const getAllMovies = async (req, res) =>{
     try {
-        const movies = await prisma.movie.findMany({})
+        const movies = await prisma.movie.findMany({
+            include:{
+                comments:{},
+                genres:{
+                    select:{genre:true}
+                },
+                orders:{}
+
+            }
+        })
         res.status(200).json(movies)        
     } catch (error) {
         res.status(400).json({message:'Bad Request'})        
@@ -25,6 +35,14 @@ const getMovieById = async (req, res) =>{
     const movie = await prisma.movie.findUnique({
         where:{
             id
+        },
+        include:{
+            comments:{},
+            genres:{
+                select:{genre:true}
+            },
+            orders:{}
+
         }
     })
     if(movie) return res.status(200).json({movie})
@@ -33,9 +51,16 @@ const getMovieById = async (req, res) =>{
 }
 
 const createMovie = async  (req, res) =>{
+
     try {
         const uploadedImage = await cloudinary.v2.uploader.upload(req.file.path);
         const {title,description,releaseYear,genre,director,rating,imageUrl} = req.body;
+
+        // Validate data before it is added to the database
+        const {error} = movieValidation(req.body);
+        if(error) {
+            return res.status(400).json({ message:error.details[0].message});
+        }
         
 
         if (!title || !description || !releaseYear) {
@@ -46,7 +71,7 @@ const createMovie = async  (req, res) =>{
             data:{
                 title: title.trim(),
                 description: description.trim(),
-                releaseYear:releaseYear,
+                releaseYear:parseInt(releaseYear),
                 genre:genre,
                 director:director,
                 rating:parseInt(rating),

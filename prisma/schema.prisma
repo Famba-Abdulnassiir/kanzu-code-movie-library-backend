@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["views"]
 }
 
@@ -12,13 +12,15 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  userName String
-  email String 
-  password String
-  role Role @default(User)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  userName  String
+  email     String @unique
+  password  String
+  role      Role      @default(User)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  comments  Comment[]
+  orders    Order[]
 }
 
 enum Role {
@@ -27,43 +29,59 @@ enum Role {
 }
 
 model Movie {
-  id Int @id @default(autoincrement())
-  title  String @db.VarChar(50)
-  description String @db.VarChar(255)
-  releaseYear DateTime
-  genre String @db.VarChar(50)
-  director String @db.VarChar(255)
-  rating Int
-  imageUrl String @db.VarChar(255)
-  trailorUrl String?  @db.VarChar(255)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id          Int       @id @default(autoincrement())
+  title       String    @db.VarChar(50) @unique
+  description String    @db.VarChar(255)
+  releaseYear Int
+  director    String    @db.VarChar(255)
+  rating      Int
+  imageUrl    String    @db.VarChar(255)
+  trailorUrl  String?   @db.VarChar(255)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  comments    Comment[]
+  orders      Order[]
+  genres      Genre[]
+  
 }
 
 model Payment {
-  id Int @id @default(autoincrement())
-  paymentDate DateTime
-  paymentMethod String @db.VarChar(50)
-  amount Int
-  transactionId String @db.VarChar(255)
-  orderId Int
+  id            Int      @id @default(autoincrement())
+  paymentDate   DateTime
+  paymentMethod String   @db.VarChar(50)
+  amount        Int
+  transactionId String   @db.VarChar(255) @unique
+  order         Order    @relation(fields: [orderId], references: [id])
+  orderId       Int
 }
 
 model Comment {
-  id Int @id @default(autoincrement())
-  movieId Int
-  userId Int
-  content String
+  id        Int      @id @default(autoincrement())
+  movieId   Int     @unique
+  userId    Int     @unique
+  content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  movie     Movie    @relation(fields: [movieId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Order {
-  id Int @id @default(autoincrement())
-  userId Int
-  movieId Int
-  orderDate DateTime
-  status String @db.VarChar(50)
+  id          Int       @id @default(autoincrement())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int       @unique
+  movie       Movie     @relation(fields: [movieId], references: [id])
+  movieId     Int       @unique
+  orderDate   DateTime
+  status      String    @db.VarChar(50)
   totalAmount Int
+  Payment     Payment[]
+}
+
+model Genre {
+  id        Int      @id @default(autoincrement())
+  genre     String   @db.VarChar(50) @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  movies    Movie[]
 }
