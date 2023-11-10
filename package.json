@@ -4,7 +4,7 @@
   "description": "Welcome to the Movie Library project developed during the Kanzu Code Foundation Bootcamp! This project is aimed at applying full-stack knowledge learned during the bootcamp, utilizing Node.js, Express.js, PostgreSQL, and Prisma as the ORM",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "nodemon index.js"
   },
   "repository": {
@@ -30,10 +30,12 @@
     "express": "^4.18.2",
     "express-openid-connect": "^2.17.1",
     "http-status-codes": "^2.3.0",
+    "jest": "^29.7.0",
     "joi": "^17.11.0",
     "jsonwebtoken": "^9.0.2",
     "knex": "^3.0.1",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "supertest": "^6.3.3"
   },
   "devDependencies": {
     "prisma": "^5.5.2"
