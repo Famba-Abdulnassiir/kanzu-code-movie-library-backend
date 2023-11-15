@@ -17,13 +17,13 @@ app.use(express.urlencoded({extended: true}));
 app.use(auth(config));
 
 // req.isAuthenticated is provided from the auth router
-app.get('/', (req, res) => {
-    res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-  });
+// app.get('/', (req, res) => {
+//     res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+//   });
 
 app.use('/api/v1/movies', movieRoute);
-app.use ('/users/signup',userRoute)
-app.use('/login',authUser);
+app.use ('/api/v1/users/signup',userRoute)
+app.use('/api/v1/auth/login',authUser);
 
 
 app.use("*", (req,res)=> {

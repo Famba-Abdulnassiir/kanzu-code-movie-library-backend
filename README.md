@@ -38,7 +38,7 @@ Please ensure your code follows the project's coding standards and conventions.
 
 ## Important links to the project.
 1. [Frontend hosted link](https://kanzu-code-movie-library-next-js.vercel.app/)
-2. [Backend API Link]()
+2. [Backend API Link](https://kanzu-code-movie-library-backend.onrender.com)
 3. [ER Diagram with lucidchart](https://lucid.app/lucidchart/d9c363b5-a52c-4931-b422-88986f26ccb1/edit?viewport_loc=-11%2C-11%2C1480%2C659%2C0_0&invitationId=inv_b648fb57-41ee-49c8-a26d-4aefdb0898d7)
 4. [Documentation with Postman](https://documenter.getpostman.com/view/10339527/2s9YXccjKD)
 
