@@ -5,10 +5,12 @@ const userRoute = require('./v1/routes/user');
 const authUser = require('./v1/routes/auth');
 const { auth } = require('express-openid-connect');
 const config = require('./config/googleAuth');
+const cors = require('cors')
 
 
 
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
