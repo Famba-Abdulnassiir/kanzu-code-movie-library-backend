@@ -31,7 +31,7 @@ const userSignup = async (req, res) => {
                 userName: userName.trim(),
                 email: email.trim(),
                 password: hashedPassword,
-                role: role.trim()
+                // role: role.trim()
             }
               
         })

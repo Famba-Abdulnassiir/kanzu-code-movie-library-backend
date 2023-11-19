@@ -16,7 +16,7 @@ model User {
   userName  String
   email     String @unique
   password  String
-  role      Role      @default(User)
+  role      Role?     @default(User)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   comments  Comment[]
@@ -31,12 +31,12 @@ enum Role {
 model Movie {
   id          Int       @id @default(autoincrement())
   title       String    @db.VarChar(50) @unique
-  description String    @db.VarChar(255)
+  description String    
   releaseYear Int
   director    String    @db.VarChar(255)
   rating      Int
-  imageUrl    String    @db.VarChar(255)
-  trailorUrl  String?   @db.VarChar(255)
+  imageUrl    String    
+  trailorUrl  String?   
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   comments    Comment[]

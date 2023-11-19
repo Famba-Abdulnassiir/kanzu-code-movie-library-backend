@@ -1,5 +1,6 @@
 const {PrismaClient} = require('@prisma/client')
 const prisma = new PrismaClient();
+
 const dotenv = require('dotenv');
 dotenv.config();
 const multer = require('multer');
@@ -9,6 +10,24 @@ const {movieValidation} = require('../../lib/validations')
 
 
 const upload = multer({dest: "uploads/"});
+
+const postImage = async (req, res) => {
+    try {        
+        
+        const imageUrl = await cloudinary.v2.uploader.upload(req.file.path); 
+
+        res.status(200).json({ imageUrl });
+
+         // delete file from uploads folder
+        unlink(req.file.path,(err)=>{
+            if(err) return res.json('failed to delete file');
+        });
+
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to upload image' });
+    }
+};
+
 
 
 const getAllMovies = async (req, res) =>{
@@ -53,8 +72,8 @@ const getMovieById = async (req, res) =>{
 const createMovie = async  (req, res) =>{
 
     try {
-        const uploadedImage = await cloudinary.v2.uploader.upload(req.file.path);
-        const {title,description,releaseYear,genre,director,rating,imageUrl} = req.body;
+        
+        const {title,description,releaseYear,genre,director,rating,imageUrl,trailorUrl} = req.body;
 
         // Validate data before it is added to the database
         const {error} = movieValidation(req.body);
@@ -75,15 +94,12 @@ const createMovie = async  (req, res) =>{
                 genre:genre,
                 director:director,
                 rating:parseInt(rating),
-                imageUrl:uploadedImage.secure_url
+                imageUrl:imageUrl,
+                // trailorUrl:trailorUrl.trim()
             }
         })
     
-        // delete file from uploads folder
-        unlink(req.file.path,(err)=>{
-            if(err) return res.json('failed to delete file');
-        });
-
+       
         res.status(201).json({message:"Record Successfully created", movie})
         
     } catch (error) {
@@ -133,4 +149,4 @@ const deleteMovieById = async (req, res) =>{
 
 
 
-module.exports = {getAllMovies, getMovieById,createMovie,updateMovie,deleteMovieById,upload}
+module.exports = {getAllMovies, getMovieById,createMovie,updateMovie,deleteMovieById,upload,postImage }

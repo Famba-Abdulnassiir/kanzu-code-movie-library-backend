@@ -22,6 +22,7 @@ app.use(auth(config));
 //   });
 
 app.use('/api/v1/movies', movieRoute);
+// app.use('/api/v1/uploadImage', uploadImage)
 app.use ('/api/v1/users/signup',userRoute)
 app.use('/api/v1/auth/login',authUser);
 
