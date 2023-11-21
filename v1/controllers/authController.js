@@ -10,7 +10,7 @@ const {loginValidation} = require('../../lib/validations');
 
 const loginUser = async (req, res) => {
  
-        const { email, password } = req.body
+        const { email, password} = req.body
 
         //Validate data before proceed to login
         const {error} = loginValidation (req.body)
@@ -35,11 +35,15 @@ const loginUser = async (req, res) => {
             if (await bcrypt.compare(password, userExists.password)) {
 
                 const user = {
+                    userName:userExists.userName,
+                    role:userExists.role,
                     email:userExists.email,
-                    password:userExists.password
+                    password:userExists.password,
+                    
+                    
                 }
                 
-                const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: 1800})
+                const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: 86400})
                 res.status(200).json({ status:"OK" , access_token:token })
 
             } else {
