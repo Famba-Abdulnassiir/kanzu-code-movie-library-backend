@@ -17,13 +17,27 @@ The Movie Library is a web application that allows users to browse, search, and 
 - Prisma CLI installed globally (`npm install -g prisma`)
 
 ## API Endpoints
+### User
 - POST /users/signup: Register a user
+- Get /users: Get all users
+- put /users/:id: update user details by id
+- delete /users/:id: delete user.
+
+### Auth
 - POST /users/login: Login a user
+
+### Movies
 - GET /movies: Get a list of movies.
 - GET /movies/:id: Get details of a specific movie.
 - POST /movies: Add a new movie to the library.
 - PUT /movies/:id: Update details of a specific movie.
 - DELETE /movies/:id: Delete a specific movie from the library
+
+### Comments
+- GET /comments: Get a list of comments.
+- POST /comments: Add a new comment to the movie.
+- PUT /comments/:id: Update details of a specific comment.
+- DELETE /comment/:id: Delete a specific comment from a movie.
 
 ## Contribution Guidelines
 We welcome contributions to the Kanzu Code Movie Library project. If you'd like to contribute, please follow these steps:
@@ -37,7 +51,7 @@ We welcome contributions to the Kanzu Code Movie Library project. If you'd like 
 Please ensure your code follows the project's coding standards and conventions.
 
 ## Important links to the project.
-1. [Frontend hosted link](https://kanzu-code-movie-library-next-js.vercel.app/)
+1. [Frontend hosted link](https://kanzu-code-movie-library-react.vercel.app/)
 2. [Backend API Link](https://kanzu-code-movie-library-backend.onrender.com)
 3. [ER Diagram with lucidchart](https://lucid.app/lucidchart/d9c363b5-a52c-4931-b422-88986f26ccb1/edit?viewport_loc=-11%2C-11%2C1480%2C659%2C0_0&invitationId=inv_b648fb57-41ee-49c8-a26d-4aefdb0898d7)
 4. [Documentation with Postman](https://documenter.getpostman.com/view/10339527/2s9YXccjKD)
