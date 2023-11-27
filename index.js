@@ -5,6 +5,7 @@ const userRoute = require('./v1/routes/user');
 const authUser = require('./v1/routes/auth');
 const { auth } = require('express-openid-connect');
 const config = require('./config/googleAuth');
+const commentsRoute = require('./v1/routes/comments');
 const cors = require('cors')
 
 
@@ -23,7 +24,8 @@ app.use(auth(config));
 
 app.use('/api/v1/movies', movieRoute);
 // app.use('/api/v1/uploadImage', uploadImage)
-app.use ('/api/v1/users/signup',userRoute)
+app.use ('/api/v1/users',userRoute)
+app.use('/api/v1/comments', commentsRoute)
 app.use('/api/v1/auth/login',authUser);
 
 
